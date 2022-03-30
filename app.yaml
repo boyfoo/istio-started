@@ -20,6 +20,8 @@ spec:
           env:
             - name: "release"
               value: "1"
+            - name: "REVIEW_IP"
+              value: "reviewsvc.myistio.svc.cluster.local"
           ports:
             - containerPort: 8080
 ---

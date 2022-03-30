@@ -1,6 +1,47 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
+  name: prod-gateway
+  namespace: myistio
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - prod.jtthink.com
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: prodinfo
+  namespace: myistio
+spec:
+  hosts:
+    - prod.jtthink.com
+  gateways:
+    - prod-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: prodsvc
+            port:
+              number: 80
+
+
+
+
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
   name: review-gateway
   namespace: myistio
 spec:
