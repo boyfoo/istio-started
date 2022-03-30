@@ -13,3 +13,15 @@
 部署: `kubectl apply -f app.yaml`
 
 因为是本地测试，修改`istio-ingressgateway`服务为`NodePort`类型
+
+安装代理 `kubectl apply -f ingress.yaml`
+
+测试访问是否成功`http://review.jtthink.com:32515/review/12`
+
+### 安装kiali
+
+`kubectl apply -f samples/addons/kiali.yaml`
+
+创建访问代理 `kubectl apply -f kiali.yaml`
+
+访问`http://kiali.jtthink.com:32515/`
