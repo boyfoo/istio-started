@@ -25,53 +25,32 @@ spec:
   gateways:
     - prod-gateway
   http:
+#    - match:
+#        - uri:
+#            prefix: /
+#      route:
+#        - destination:
+#            host: prodsvc
+#            port:
+#              number: 80
     - match:
         - uri:
-            prefix: /
+            prefix: "/p" # 把/p请求重写到/pords 路径去
+      rewrite:
+        uri: "/pords"
       route:
         - destination:
             host: prodsvc
             port:
               number: 80
-
-
-
-
-
----
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: review-gateway
-  namespace: myistio
-spec:
-  selector:
-    istio: ingressgateway
-  servers:
-    - port:
-        number: 80
-        name: http
-        protocol: HTTP
-      hosts:
-        - review.jtthink.com
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: reviewinfo
-  namespace: myistio
-spec:
-  hosts:
-    - review.jtthink.com
-  gateways:
-    - review-gateway
-  http:
+    # 其他的服务也可以绑定到这里
     - match:
         - uri:
-            prefix: /
+            prefix: "/r" # 把/p请求重写到/pords 路径去
+      rewrite:
+        uri: "/review"
       route:
         - destination:
             host: reviewsvc
             port:
               number: 80
-
