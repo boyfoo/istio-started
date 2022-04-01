@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prodapiv2
+  namespace: myistio
+spec:
+  selector:
+    matchLabels:
+      app: prod
+      version: v2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prod
+        version: v2
+    spec:
+      containers:
+        - name: prodv2
+          image: registry.cn-hangzhou.aliyuncs.com/boyfoo/prod:2.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: "release"
+              value: "1"
+            - name: "REVIEW_IP"
+              value: "reviewsvc.myistio.svc.cluster.local"
+          ports:
+            - containerPort: 8080

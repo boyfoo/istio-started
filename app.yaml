@@ -1,20 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prodapi
+  name: prodapiv1
   namespace: myistio
 spec:
   selector:
     matchLabels:
       app: prod
+      version: v1
   replicas: 1
   template:
     metadata:
       labels:
         app: prod
+        version: v1
     spec:
       containers:
-        - name: prod
+        - name: prodv1
           image: registry.cn-hangzhou.aliyuncs.com/boyfoo/prod:1.0
           imagePullPolicy: IfNotPresent
           env:
@@ -37,8 +39,10 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-  selector:
+  selector: # 选择得时候没有加version
     app: prod
+
+
 
 # reviewapi
 ---
@@ -66,21 +70,6 @@ spec:
               value: "1"
           ports:
             - containerPort: 8081
-#---
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: reviewsvc
-#  namespace: myistio
-#  labels:
-#    app: review
-#spec:
-#  type: ClusterIP
-#  ports:
-#    - port: 80
-#      targetPort: 8081
-#  selector:
-#    app: review
 ---
 apiVersion: v1
 kind: Service
@@ -94,6 +83,6 @@ spec:
   ports:
     - port: 80
       targetPort: 8081
-#      nodePort: 30033
+  #      nodePort: 30033
   selector:
     app: review
