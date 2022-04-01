@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: prod-rule
+  namespace: myistio
+spec:
+  host: prodsvc
+  subsets:
+    - name: v1svc # 对应ingress.yaml 中使用的
+      labels:
+        version: v2 # 只选中version=v2的服务

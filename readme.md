@@ -18,7 +18,7 @@
 
 安装代理 `kubectl apply -f ingress.yaml`
 
-测试访问是否成功`http://prod.jtthink.com:32515/p/12` 或 `http://prod.jtthink.com:32515/p/12`
+测试访问是否成功`http://prod.jtthink.com:32515/p/12` 或 `http://prod.jtthink.com:32515/r/12`
 
 ### 部署kiali
 
@@ -31,3 +31,9 @@
 ### prod v2 版本
 
 部署 `kubectl apply -f appv2.yaml`
+
+连续访问多次 `http://prod.jtthink.com:32515/p/12` 返回不同版本
+
+部署限定版本`rule`: `kubectl apply -f prodrule.yaml`
+
+请求 `http://prod.jtthink.com:32515/rule-p/12` 永远返回`v2`
