@@ -12,5 +12,5 @@ ssltool/
 src/.idea
 src/.idea/*
 src/demo01/myhook
-./istio/*
-./istio
+/istio/*
+/istio
