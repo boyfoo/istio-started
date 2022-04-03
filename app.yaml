@@ -15,6 +15,7 @@ spec:
         app: prod
         version: v1
     spec:
+      nodeName: node02
       containers:
         - name: prodv1
           image: registry.cn-hangzhou.aliyuncs.com/boyfoo/prod:1.0
@@ -61,6 +62,7 @@ spec:
       labels:
         app: review
     spec:
+      nodeName: node02
       containers:
         - name: review
           image: registry.cn-hangzhou.aliyuncs.com/boyfoo/review:1.0

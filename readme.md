@@ -28,6 +28,8 @@
 
 访问`http://kiali.jtthink.com:32515/`
 
+
+
 ### prod v2 版本
 
 部署 `kubectl apply -f appv2.yaml`
