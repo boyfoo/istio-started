@@ -12,14 +12,6 @@
 
 给命名空间开启自动注入: `kubectl label namespace myistio istio-injection=enabled`
 
-### 部署service
-
-部署: `kubectl apply -f app.yaml`
-
-安装代理 `kubectl apply -f ingress.yaml`
-
-测试访问是否成功`http://prod.jtthink.com:32515/p/12` 或 `http://prod.jtthink.com:32515/r/12`
-
 ### 部署kiali
 
 `kubectl apply -f samples/addons/kiali.yaml`
@@ -28,14 +20,21 @@
 
 访问`http://kiali.jtthink.com:32515/`
 
+### 部署service
 
+部署: `kubectl apply -f prodv1.yaml && kubectl apply -f reviewv1.yaml`
+
+安装网关和url路径代理 `kubectl apply -f prod-ingress.yaml`
+
+测试访问是否成功`http://prod.jtthink.com:32515/p/12` 或 `http://prod.jtthink.com:32515/r/12`
 
 ### prod v2 版本
 
-部署 `kubectl apply -f appv2.yaml`
+部署 `kubectl apply -f prodv2.yaml`
 
 连续访问多次 `http://prod.jtthink.com:32515/p/12` 返回不同版本
 
-部署限定版本`rule`: `kubectl apply -f prodrule.yaml`
+部署限定版本`rule`: `kubectl apply -f prodv2-rule.yaml`
 
-请求 `http://prod.jtthink.com:32515/rule-p/12` 永远返回`v2`
+请求 `http://prod.jtthink.com:32515/v2/p/12` 永远返回`v2`
+

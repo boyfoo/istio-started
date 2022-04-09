@@ -21,8 +21,6 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/boyfoo/prod:2.0
           imagePullPolicy: IfNotPresent
           env:
-            - name: "release"
-              value: "1"
             - name: "REVIEW_IP"
               value: "reviewsvc.myistio.svc.cluster.local"
           ports:

@@ -1,0 +1,38 @@
+# 创建一个路由规则
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: prodv2-rule
+  namespace: myistio
+spec:
+  host: prodsvc
+  subsets:
+    - name: prodv2-rule-svc # 名称 对应下方VirtualService中使用的
+      labels:
+        version: v2 # 只选中version=v2的服务
+
+---
+# 定义虚拟服务
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: prodv2info
+  namespace: myistio
+spec:
+  hosts:
+    - prod.jtthink.com
+  gateways:
+    - prod-gateway
+  http:
+    - match:
+        - uri:
+            prefix: "/v2/p"
+      rewrite:
+        uri: "/pords"
+      route:
+        - destination:
+            subset: prodv2-rule-svc
+            host: prodsvc
+            port:
+              number: 80
+

@@ -25,14 +25,6 @@ spec:
   gateways:
     - prod-gateway
   http:
-    #    - match:
-    #        - uri:
-    #            prefix: /
-    #      route:
-    #        - destination:
-    #            host: prodsvc
-    #            port:
-    #              number: 80
     - match:
         - uri:
             prefix: "/p" # 把/p请求重写到/pords 路径去
@@ -43,19 +35,6 @@ spec:
             host: prodsvc
             port:
               number: 80
-
-    - match:
-        - uri:
-            prefix: "/rule-p"
-      rewrite:
-        uri: "/pords"
-      route:
-        - destination:
-            subset: v1svc # 对应prodrule.yaml内的
-            host: prodsvc
-            port:
-              number: 80
-
     # 其他的服务也可以绑定到这里
     - match:
         - uri:
@@ -67,3 +46,12 @@ spec:
             host: reviewsvc
             port:
               number: 80
+    #    - match:
+    #        - uri:
+    #            prefix: /
+    #      route:
+    #        - destination:
+    #            host: prodsvc
+    #            port:
+    #              number: 80
+
