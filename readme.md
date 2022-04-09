@@ -24,6 +24,8 @@
 
 部署: `kubectl apply -f prodv1.yaml && kubectl apply -f reviewv1.yaml`
 
+服务: `kubectl apply -f prod-svc.yaml`
+
 安装网关和url路径代理 `kubectl apply -f prod-ingress.yaml`
 
 测试访问是否成功`http://prod.jtthink.com:32515/p/12` 或 `http://prod.jtthink.com:32515/r/12`

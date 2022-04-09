@@ -5,7 +5,7 @@ metadata:
   name: prodv2-rule
   namespace: myistio
 spec:
-  host: prodsvc
+  host: prodsvc # 与prod-ingress内的route.destination.host 一致才能对应上
   subsets:
     - name: prodv2-rule-svc # 名称 对应下方VirtualService中使用的
       labels:
@@ -30,6 +30,7 @@ spec:
       rewrite:
         uri: "/pords"
       route:
+        # 绑定DestinationRule
         - destination:
             subset: prodv2-rule-svc
             host: prodsvc

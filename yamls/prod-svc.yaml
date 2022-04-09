@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prodsvc
+  namespace: myistio
+  labels:
+    app: prod
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector: # 选择得时候没有加version
+    app: prod

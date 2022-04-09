@@ -32,7 +32,7 @@ spec:
         uri: "/pords"
       route:
         - destination:
-            host: prodsvc
+            host: prodsvc #服务名称
             port:
               number: 80
     # 其他的服务也可以绑定到这里
