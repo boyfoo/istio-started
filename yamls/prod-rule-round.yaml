@@ -1,22 +1,24 @@
-# 创建一个路由规则
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: prodv2-rule
+  name: prod-rule-round
   namespace: myistio
 spec:
   host: prodsvc # 与prod-gateway-vs内的route.destination.host 一致才能对应上
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN # 轮序（默认） LEAST_CONN(最少连接) RANDOM(随机)
   subsets:
-    - name: prodv2-rule-svc # 名称 对应下方VirtualService中使用的
+    - name: prod-rule-round-sub # 名称 对应下方VirtualService中使用的
       labels:
-        version: v2 # 只选中version=v2的pod
+        app: prod #选择pod的标签
 
 ---
 # 定义虚拟服务
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: prodv2info
+  name: prodinforound
   namespace: myistio
 spec:
   hosts:
@@ -26,12 +28,12 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/v2/p"
+            prefix: "/simple"
       rewrite:
         uri: "/pords"
       route:
         - destination:
-            subset: prodv2-rule-svc # 定义目的路由子集合
+            subset: prod-rule-round-sub # 定义目的路由子集合
             host: prodsvc #服务名称
             port:
               number: 80

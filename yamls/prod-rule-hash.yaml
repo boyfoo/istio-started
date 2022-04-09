@@ -1,22 +1,25 @@
-# 创建一个路由规则
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: prodv2-rule
+  name: prod-rule-hash
   namespace: myistio
 spec:
   host: prodsvc # 与prod-gateway-vs内的route.destination.host 一致才能对应上
+  trafficPolicy:
+    loadBalancer:
+      consistentHash: # httpCookie(基于cookie) useSourceIp(基于ip) minimumRingSize(环形hash)
+        httpHeaderName: myname  #基于head头
   subsets:
-    - name: prodv2-rule-svc # 名称 对应下方VirtualService中使用的
+    - name: prod-rule-hash-sub # 名称 对应下方VirtualService中使用的
       labels:
-        version: v2 # 只选中version=v2的pod
+        app: prod #选择pod的标签
 
 ---
 # 定义虚拟服务
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: prodv2info
+  name: prodinfohash
   namespace: myistio
 spec:
   hosts:
@@ -26,12 +29,12 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/v2/p"
+            prefix: "/hash"
       rewrite:
         uri: "/pords"
       route:
         - destination:
-            subset: prodv2-rule-svc # 定义目的路由子集合
+            subset: prod-rule-hash-sub # 定义目的路由子集合
             host: prodsvc #服务名称
             port:
               number: 80
