@@ -52,4 +52,16 @@
 
 用于一个用户请求只到一个固定的节点
 
-请求 `http://prod.jtthink.com:32515/hash/12` `header` 加入 `myname` 相同的值的请求会访问同一个节点  
+请求 `http://prod.jtthink.com:32515/hash/12` `header` 加入 `myname` 相同的值的请求会访问同一个节点
+
+### JWT
+
+生成秘钥
+
+```
+$ cd cert
+# 生成私钥
+$ openssl genrsa -out myrsa.pem 2048
+# 生成公钥
+$ openssl rsa -in myrsa.pem -pubout -out mypub.pem
+```

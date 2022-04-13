@@ -1,5 +1,5 @@
 prods-build:
-	docker run --rm -it -v $(pwd):/app -w /app -e CGO_ENABLED=0 -e GO111MODULE=on  golang:1.14-alpine3.12 go build -o build/prods pord/main.go
+	docker run --rm -it -v $(pwd):/app -w /app -e CGO_ENABLED=0 -e GO111MODULE=on  golang:1.15-alpine3.12 go build -o build/prods pord/main.go
 
 
 docker-prods-build:
@@ -16,7 +16,7 @@ docker-review-push:
 
 
 prodsv2-build:
-	docker run --rm -it -v $(pwd):/app -w /app -e CGO_ENABLED=0 -e GO111MODULE=on  golang:1.14-alpine3.12 go build -o build/prodsv2 pordv2/main.go
+	docker run --rm -it -v $(pwd):/app -w /app -e CGO_ENABLED=0 -e GO111MODULE=on  golang:1.15-alpine3.12 go build -o build/prodsv2 pordv2/main.go
 docker-prodsv2-build:
 	docker build -t prods:2.0 -f ./Dockerfile-prodsv2 .
 
