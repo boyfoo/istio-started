@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.26.1/axios.min.js"></script>
+    <script>
+        axios.get("http://prod.jtthink.com:32515/cross-p/12", {
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InpoYW5nc2FuIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoidXNlckBqdHRoaW5rLmNvbSJ9.T1CLmZQMm1c9LIvLxxVODdGR6rKthVFB67wlArc667O91w-cKRXNGQTSmFrLkhnkF5CDMIj3cNwX4OeVAaIIMEiLF2VNYx-YTfwdg3mPrsBI9JlVIjmCTd6TkqNK_6yDtg2HNp_hQKazFn_2wVzmfPJnsMqxTnwFtg_vz7EFwsMKIrjLOPFK6NY7SKCTtVsFOQfZypmsI5hcpVXRmSh7i01DCPAmxfYzOaOdz3qMS63W6UWHuMfDmJxfP-ehqcb2Fkwq76rbSYOVEVq0_U_O7JokGv3DeHDxiM5yMBErgz-5TujBlpovqw_OaIytsWiDwzEErIo0cPnSr9tlZL_VFg',
+            }
+        }).then((rsp) => {
+            console.log(rsp.data)
+        })
+
+
+    </script>
+</head>
+<body>
+测试
+</body>
+</html>

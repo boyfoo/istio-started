@@ -74,10 +74,23 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 此时访问`http://prod.jtthink.com:32515/p/12` 会没有权限
 
-加入请求`token`，访问 `jtw.io`，选择`RS256`加密方式,`VERIFY SIGNATURE`粘贴`cert/mypub.pem`和`cert/myrsa.pem`，`payload`内新增`"iss":"user@jtthink.com"`
+加入请求`token`，访问 `jtw.io`，选择`RS256`加密方式,`VERIFY SIGNATURE`粘贴`cert/mypub.pem`和`cert/myrsa.pem`，`payload`
+内新增`"iss":"user@jtthink.com"`
 ，获取生成`token`用于请求
 
 `curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InpoYW5nc2FuIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoidXNlckBqdHRoaW5rLmNvbSJ9.T1CLmZQMm1c9LIvLxxVODdGR6rKthVFB67wlArc667O91w-cKRXNGQTSmFrLkhnkF5CDMIj3cNwX4OeVAaIIMEiLF2VNYx-YTfwdg3mPrsBI9JlVIjmCTd6TkqNK_6yDtg2HNp_hQKazFn_2wVzmfPJnsMqxTnwFtg_vz7EFwsMKIrjLOPFK6NY7SKCTtVsFOQfZypmsI5hcpVXRmSh7i01DCPAmxfYzOaOdz3qMS63W6UWHuMfDmJxfP-ehqcb2Fkwq76rbSYOVEVq0_U_O7JokGv3DeHDxiM5yMBErgz-5TujBlpovqw_OaIytsWiDwzEErIo0cPnSr9tlZL_VFg" http://prod.jtthink.com:32515/p/12`
 
 成功访问
 
+### 新增跨域
+
+部署一个允许跨域的路径 `kubectl apply -f yamls/prod-cross-vs.yaml`
+
+打开 `html/index.html` 访问地址 `http://prod.jtthink.com:32515/cross-p/12`
+
+如果`token`错误无法返回错误信息，因为在未加入跨域头时，`JWT`就验证报错打回来了，需要新增一个就算错误也要加入跨域头功能 `kubectl apply -f yamls/prod-cross-vs.yaml`
+
+
+
+
+ 
