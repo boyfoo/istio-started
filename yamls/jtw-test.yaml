@@ -1,0 +1,35 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: jwt-test
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  jwtRules:
+    - issuer: "user@jtthink.com"
+      jwks: |
+        {
+            "keys": [
+              {
+                "e":"AQAB",
+                "kty":"RSA",
+                "n":"uboAte4RXMcRjQX39mDLlK6HyfAOLiA_MfD-zpUlAlE4H83VA8k4DWOwajAU6gKoyxxINfLBsmKxJZv7IGQrWLluslrrFMUBS5wHFobps4Xvg0F_nPyWWGC7pdh31I7qPxzdU8jr-N-nEBfGRI1aV3hRf4_rReo6Gt0dHFsqwtR6J7uIPferFUJE3cXM0Xj6Yurnulgd4EKOb-mw4QKaJp2E_Ua7lEL3Vyud6XbHAONYoq53J0PGtlv41VASsB9c8qWeJKPuwO9dxRRbrwDiWKLXcLN83gNUCLYSlMkZiwlmsEpefvJnar_hEuBlu1EkXLUmT-0LbnhUnHdn0r9vEw"
+              }
+            ]
+        }
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: prod-authpolicy
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  rules:
+    - from:
+        - source:
+            requestPrincipals: [ "*" ]
