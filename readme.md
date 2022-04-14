@@ -68,9 +68,9 @@ $ openssl genrsa -out myrsa.pem 2048
 $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 ```
 
-生成token内容 `cd cert && go run main.go `，粘贴到 `yamls/jtw-test.yaml` 内:
+生成token内容 `cd cert && go run main.go `，粘贴到 `yamls/jwt-test.yaml` 内:
 
-运行 `kubectl apply -f yamls/jtw-test.yaml`
+运行 `kubectl apply -f yamls/jwt-test.yaml`
 
 此时访问`http://prod.jtthink.com:32515/p/12` 会没有权限
 
@@ -88,7 +88,7 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 打开 `html/index.html` 访问地址 `http://prod.jtthink.com:32515/cross-p/12`
 
-如果`token`错误无法返回错误信息，因为在未加入跨域头时，`JWT`就验证报错打回来了，需要新增一个就算错误也要加入跨域头功能 `kubectl apply -f yamls/prod-cross-vs.yaml`
+如果`token`错误无法返回错误信息，因为在未加入跨域头时，`JWT`就验证报错打回来了，需要新增一个就算错误也要加入跨域头功能 `kubectl apply -f yamls/jwt-cross.yaml`
 
 
 
