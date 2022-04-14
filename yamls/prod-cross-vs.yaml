@@ -1,0 +1,37 @@
+# 定义虚拟服务
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: prod-cross-vs
+  namespace: myistio
+spec:
+  hosts:
+    - prod.jtthink.com
+  gateways:
+    - prod-gateway
+  http:
+    - match:
+        - uri:
+            prefix: "/cross-p" # 把/p请求重写到/pords 路径去
+      rewrite:
+        uri: "/pords"
+      route:
+        - destination:
+            host: prodsvc #服务名称
+            port:
+              number: 80
+      # 跨域
+      corsPolicy:
+        allowOrigins:
+          - exact: "*"
+        allowMethods:
+          - GET
+          - POST
+          - PATCH
+          - PUT
+          - DELETE
+          - OPTIONS
+        allowCredentials: true
+        allowHeaders:
+          - authorization # 允许携带的头
+        maxAge: "24h"
