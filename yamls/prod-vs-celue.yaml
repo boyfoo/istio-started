@@ -49,3 +49,32 @@ spec:
         allowHeaders:
           - authorization # 允许携带的头
         maxAge: "24h"
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: prod-authpolicy
+  namespace: istio-system
+spec:
+  action: ALLOW
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  rules:
+    - from:
+        - source:
+            requestPrincipals: [ "*" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/prods/*" ] #允许访问的
+    - from:
+        - source:
+            requestPrincipals: [ "*" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/admin" ]
+      when: #必须满足的条件
+        - key: request.auth.claims[role]  # jwt生成时payload内的role字段的值
+          values: [ "admin" ]
