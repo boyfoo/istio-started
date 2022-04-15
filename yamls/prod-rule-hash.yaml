@@ -31,7 +31,7 @@ spec:
         - uri:
             prefix: "/hash"
       rewrite:
-        uri: "/pords"
+        uri: "/prods"
       route:
         - destination:
             subset: prod-rule-hash-sub # 定义目的路由子集合

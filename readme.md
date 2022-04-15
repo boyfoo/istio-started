@@ -90,7 +90,6 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 如果`token`错误无法返回错误信息，因为在未加入跨域头时，`JWT`就验证报错打回来了，需要新增一个就算错误也要加入跨域头功能 `kubectl apply -f yamls/jwt-cross.yaml`
 
+### 访问策略
 
-
-
- 
+删除就路由,避免影响`kubectl delete -f prod-vs.yaml,prod-rule-hash.yaml,prod-rule-round.yaml,prod-cross-vs.yaml`

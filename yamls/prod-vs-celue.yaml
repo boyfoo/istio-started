@@ -1,20 +1,34 @@
-# 定义虚拟服务
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: prod-gateway
+  namespace: myistio
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - prod.jtthink.com
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: prod-cross-vs
+  name: prod-vs-celue
   namespace: myistio
 spec:
   hosts:
     - prod.jtthink.com
   gateways:
     - prod-gateway
+    - mesh # 内部访问也走路由网关
   http:
     - match:
         - uri:
-            prefix: "/cross-p" # 把/p请求重写到/prods 路径去
-      rewrite:
-        uri: "/prods"
+            prefix: "/"
       route:
         - destination:
             host: prodsvc #服务名称

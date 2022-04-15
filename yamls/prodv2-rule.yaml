@@ -28,7 +28,7 @@ spec:
         - uri:
             prefix: "/v2/p"
       rewrite:
-        uri: "/pords"
+        uri: "/prods"
       route:
         - destination:
             subset: prodv2-rule-svc # 定义目的路由子集合

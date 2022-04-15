@@ -18,7 +18,7 @@ spec:
 #      nodeName: node02
       containers:
         - name: prodv2
-          image: registry.cn-hangzhou.aliyuncs.com/boyfoo/prod:2.0
+          image: registry.cn-hangzhou.aliyuncs.com/boyfoo/prod:2.1
           imagePullPolicy: IfNotPresent
           env:
             - name: "REVIEW_IP"

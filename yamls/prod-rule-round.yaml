@@ -30,7 +30,7 @@ spec:
         - uri:
             prefix: "/simple"
       rewrite:
-        uri: "/pords"
+        uri: "/prods"
       route:
         - destination:
             subset: prod-rule-round-sub # 定义目的路由子集合

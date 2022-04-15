@@ -27,9 +27,9 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/p" # 把/p请求重写到/pords 路径去
+            prefix: "/p" # 把/p请求重写到/prods 路径去
       rewrite:
-        uri: "/pords"
+        uri: "/prods"
       route:
         - destination:
             host: prodsvc #服务名称
@@ -38,7 +38,7 @@ spec:
     # 其他的服务也可以绑定到这里
     - match:
         - uri:
-            prefix: "/r" # 把/p请求重写到/pords 路径去
+            prefix: "/r" # 把/p请求重写到/prods 路径去
       rewrite:
         uri: "/review"
       route:
