@@ -14,7 +14,7 @@ spec:
       labels:
         app: review
     spec:
-#      nodeName: node02
+      nodeName: node02
       containers:
         - name: review
           image: registry.cn-hangzhou.aliyuncs.com/boyfoo/review:1.1
