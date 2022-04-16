@@ -105,4 +105,6 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 生成token中`PAYLOAD`指定角色 `"role": "admin"`：
 就可以访问：`curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IuaIkeaYr2FkbWluIiwiaWF0IjoxNTE2MjM5MDIyLCJpc3MiOiJ1c2VyQGp0dGhpbmsuY29tIiwicm9sZSI6ImFkbWluIn0.CXOGlCc21bJTtJyvSYn7nJDCi0ljfD2tKlTZigdO-44wn1a0_WX_E3F9mqflEcize-KWvSDh22JNaC9BkoiQDuYjmuQzl7BQWvwvBz3Hj13joo6fQZam7TOy9o7h2ZVQYFMbKQJaTSzfo42opGm9mP47sBNzkpy6EUWskJeHDSXf4A214WlBeG7uS_6KtlT1Ornbct_ohwoB2hJynrFwH67bWiuAFtPZRBzljZQiNo_m60Vttx_rDtlb2dlRrbwJ-IxRSFrpLQkG2fEzMprfkH4TDPU0YNEwlgnA33RhqZ_CDzN0MpMkVOKNBXy4hcl5TfOKRyHO3PU376yoW0VijQ" http://prod.jtthink.com:32515/admin`
 
+### JWT过期时间
 
+在 `payload` 内加入`exp: 123123123`, 时间戳会自动判断是否过期

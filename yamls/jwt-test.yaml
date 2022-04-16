@@ -8,7 +8,7 @@ spec:
     matchLabels:
       istio: ingressgateway
   jwtRules:
-    - issuer: "user@jtthink.com"
+    - issuer: "user@jtthink.com"#jwt内payload的iss字段对应的值
       jwks: |
         {
             "keys": [
