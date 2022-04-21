@@ -123,6 +123,8 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 `kb apply -f envoy/testfilter-pre.yaml` 必须在`testfilter.yaml`完全部署完才能执行
 
+查看新增的Filter内容`kb exec -n istio-system -it istio-ingressgateway-668fb685db-dg9tv -- curl http://localhost:15000/config_dump\?resource\=dynamic_listeners`
+
 ### LUA Filter 日志
 
 进入容器内 `kb exec -n istio-system -it istio-ingressgateway-668fb685db-dg9tv -- sh`
