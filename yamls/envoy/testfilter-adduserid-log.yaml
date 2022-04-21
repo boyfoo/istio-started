@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: myfliter-adduserid-log
+  namespace: istio-system
+spec:
+  workloadSelector:
+    labels:
+      istio: ingressgateway #这个网关进来的
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: GATEWAY
+        listener:
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"
+              subFilter:
+                name: "my-adduserid.lua"
+      patch:
+        operation: INSERT_AFTER
+        value:
+          name: my-adduserid-log.lua
+          typed_config:
+            "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+            inlineCode: |
+              function envoy_on_request(request)
+                local getid = request:headers():get("userid")
+                request:logInfo("useid is"..getid)
+              end

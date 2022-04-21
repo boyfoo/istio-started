@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: myfliter-pre
+  namespace: istio-system
+spec:
+  workloadSelector:
+    labels:
+      istio: ingressgateway #这个网关进来的
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: GATEWAY
+        listener:
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"
+              subFilter:
+                name: "my.lua"
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: my-pre.lua
+          typed_config:
+            "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+            inlineCode: |
+              function envoy_on_response(response_handle)
+                local myname = response_handle:headers():get("myname")
+                response_handle:headers():add("mynewname", "pre_" .. myname)
+              end

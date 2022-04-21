@@ -15,7 +15,7 @@ spec:
         app: prod
         version: v2
     spec:
-      nodeName: node02
+#      nodeName: node02
       containers:
         - name: prodv2
           image: registry.cn-hangzhou.aliyuncs.com/boyfoo/prod:2.1

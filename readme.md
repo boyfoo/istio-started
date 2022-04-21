@@ -109,4 +109,29 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 在 `payload` 内加入`exp: 123123123`, 时间戳会自动判断是否过期
 
+### Filter
+
+删除其他网关配置
+
+部署`kubectl apply -f prod-vs.yaml`
+
+新增响应头`kb apply -f envoy/testfilter.yaml`
+
+请求 `http://prod.jtthink.com:32515/p/12` 会响应`header`内新增`myname`字段
+
+最新增一个根据`myname`字段，自动添加前缀的字段`mynewname`
+
+`kb apply -f envoy/testfilter-pre.yaml` 必须在`testfilter.yaml`完全部署完才能执行
+
+### LUA Filter 日志
+
+进入容器内 `kb exec -n istio-system -it istio-ingressgateway-668fb685db-dg9tv -- sh`
+
+设置日志等级为`info`: `curl -X POST  http://localhost:15000/logging?level=info`
+
+设置`request header`头: `kb apply -f testfilter-adduserid.yaml`
+
+设置打印日志：`kb apply -f testfilter-adduserid-log.yaml`
+
+请求几次，查看日志`kb logs -n istio-system istio-ingressgateway-668fb685db-dg9tv`
 
