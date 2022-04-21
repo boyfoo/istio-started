@@ -137,3 +137,8 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 请求几次，查看日志`kb logs -n istio-system istio-ingressgateway-668fb685db-dg9tv`
 
+### LUA Filter 拦截请求
+
+部署：`kb apply -f testfilter-checkappid.yaml`
+
+此时请求会报错`400`，需要在header头里加`appid`值
