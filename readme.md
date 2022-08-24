@@ -1,3 +1,6 @@
+
+### 安装
+
 下载 https://github.com/istio/istio/releases/tag/1.9.9
 
 安装  `./istioctl manifest apply --set profile=demo`
