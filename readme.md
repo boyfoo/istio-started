@@ -78,6 +78,26 @@
 
 实例体验后删除 `kubectl delete -f prod-rule-hash.yaml`
 
+### 故障注入
+
+延迟`kubectl apply -f prod-vs-err-delay.yaml`
+
+访问`http://prod.jtthink.com:32515/delay/12` 延迟3s相应
+
+http500报错 `kubectl apply -f prod-vs-err-code.yaml`
+
+访问`http://prod.jtthink.com:32515/errcode/12` 报错
+
+删除体验
+
+`kb delete -f prod-vs-err-delay.yaml`
+
+`kb delete -f prod-vs-err-code.yaml`
+
+之前都是给`prod`注入故障，改为给`review`注入故障 `kb apply -f prod-vs-err-delay-review.yaml`
+
+因为`prod`会访问`review`，请求`http://prod.jtthink.com:32515/p/12`也会延迟效果
+
 ### JWT
 
 给`ingressgateway` 网关加入`jwt` 认证

@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: prodinfoerrderevi
+  namespace: myistio
+spec:
+  hosts:
+    - reviewsvc #指定服务名称 插件会自己帮忙补上.myistio.svc.cluster.local
+  gateways: # 可以把这个字段都删除了 没有这个字段默认是mesh
+    - mesh  #代表服务网关间的流量
+  http:
+    - match:
+        - uri:
+            prefix: "/" # 匹配所有地址
+      fault:
+        delay:
+          fixedDelay: 2s
+          percentage:
+            value: 100 #百分百
+      route:
+        - destination:
+            host: reviewsvc
+            port:
+              number: 80
+
