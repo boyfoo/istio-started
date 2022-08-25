@@ -22,6 +22,7 @@ metadata:
 spec:
   hosts:
     - prod.jtthink.com
+    - prodsvc #把下面的gateways注释掉才能起作用 意思是不用满足匹配gateways条件 在服务内curl prodsvc服务名 就能起到从写的作用
   gateways:
     - prod-gateway
   http:

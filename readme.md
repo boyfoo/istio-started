@@ -31,7 +31,7 @@
 
 服务: `kubectl apply -f prod-svc.yaml`
 
-安装网关和url路径虚拟服务代理 `kubectl apply -f prod-vs.yaml`
+安装网关和url路径虚拟服务代理 `kubectl apply -f prod-vs.yaml`，将路径`/p`重写成`/prods`，并代理访问
 
 测试访问是否成功`http://prod.jtthink.com:32515/p/12` 或 `http://prod.jtthink.com:32515/r/12`
 
