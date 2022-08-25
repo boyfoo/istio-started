@@ -1,13 +1,14 @@
-
 ### 安装
 
 下载 https://github.com/istio/istio/releases/tag/1.9.9
 
 安装  `./istioctl manifest apply --set profile=demo`
 
-因为是本地测试，修改`istio-ingressgateway`服务为`NodePort`类型 `kubectl patch service istio-ingressgateway -n istio-system -p '{"spec":{"type":"NodePort"}}'`
+因为是本地测试，修改`istio-ingressgateway`服务为`NodePort`
+类型 `kubectl patch service istio-ingressgateway -n istio-system -p '{"spec":{"type":"NodePort"}}'`
 
-获取地址`kubectl get po -l istio=ingressgateway -n istio-system -o 'jsonpath={.items[0].status.hostIP}'`和端口`kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'`
+获取地址`kubectl get po -l istio=ingressgateway -n istio-system -o 'jsonpath={.items[0].status.hostIP}'`
+和端口`kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'`
 
 创建一个学习用的命名空间 `kubectl create ns myistio`
 
@@ -24,6 +25,8 @@
 创建访问代理 `kubectl apply -f kiali.yaml`
 
 访问`http://kiali.jtthink.com:32515/`
+
+安装`prometheus`，使用示例中提供的 `kb apply -f samples/addons/prometheus.yaml`
 
 ### 部署service
 
