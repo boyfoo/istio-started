@@ -9,8 +9,6 @@
 
 获取地址`kubectl get po -l istio=ingressgateway -n istio-system -o 'jsonpath={.items[0].status.hostIP}'`和端口`kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'`
 
-
-
 创建一个学习用的命名空间 `kubectl create ns myistio`
 
 ### 字段注入istio
