@@ -98,6 +98,8 @@ http500报错 `kubectl apply -f prod-vs-err-code.yaml`
 
 因为`prod`会访问`review`，请求`http://prod.jtthink.com:32515/p/12`也会延迟效果
 
+删除`kb delete -f prod-vs-err-delay-review.yaml`
+
 ### JWT
 
 给`ingressgateway` 网关加入`jwt` 认证
