@@ -4,10 +4,14 @@ metadata:
   name: prod-rule-round
   namespace: myistio
 spec:
-  host: prodsvc # 与prod-gateway-vs内的route.destination.host 一致才能对应上
+  host: prodsvc
   trafficPolicy:
     loadBalancer:
-      simple: ROUND_ROBIN # 轮序（默认） LEAST_CONN(最少连接) RANDOM(随机)
+      simple: RANDOM # 轮序ROUND_ROBIN（默认） LEAST_CONN(最少连接) RANDOM(随机)
+
+  # 当设置了上面的内容后，注释了下面的所有代码，包括下面的VirtualService内容，请求到/p/*的都会变成对应的loadBalancer方式 跟下面subsets是否设置的无关
+  # 上面的代码设置后请求 /p/12 或 /simple 都是随机
+  # subsets理解为在上面设置已经在代理中后多准备了多个附加条件，只有destination.subset指定了这个附加条件才生效，不指定这个条件不会生效
   subsets:
     - name: prod-rule-round-sub # 名称 对应下方VirtualService中使用的
       labels:
