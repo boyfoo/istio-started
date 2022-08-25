@@ -44,6 +44,8 @@
 
 连续访问多次 `http://prod.jtthink.com:32515/p/12` 返回不同版本
 
+原因是`prod-svc.yaml`创建`svc`选择容器时，并没有指定版本标签`version`，所以会轮训所有容器，造成多版本交叉，这种情况就算不使用`istio`也是多版本
+
 部署限定版本`rule`: `kubectl apply -f prodv2-rule.yaml`
 
 请求 `http://prod.jtthink.com:32515/v2/p/12` 永远返回`v2`
