@@ -50,13 +50,15 @@
 
 请求 `http://prod.jtthink.com:32515/v2/p/12` 永远返回`v2`
 
-### prod 轮序
+### prod 随机
 
 `kubectl apply -f prod-rule-round.yaml`
 
 请求 `http://prod.jtthink.com:32515/simple/12`
 
-由于默认是轮序 所以结果与 `http://prod.jtthink.com:32515/p/12` 是一样的
+请求后，会出现连续多次访问出同一个版本的情况，这个在之前默认轮训下是不会发送的
+
+另外 `http://prod.jtthink.com:32515/p/12` 也会变成随机，原因文件内有备注解释
 
 ### 一致性 hash
 
