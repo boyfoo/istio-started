@@ -50,7 +50,7 @@
 
 请求 `http://prod.jtthink.com:32515/v2/p/12` 永远返回`v2`
 
-### prod 随机
+### 访问服务prod随机选择pod
 
 `kubectl apply -f prod-rule-round.yaml`
 
@@ -68,7 +68,7 @@
 
 `kubectl delete -f prod-rule-round.yaml`
 
-### 一致性 hash
+### 访问服务一致性hash选择pod
 
 用于一个用户请求只到一个固定的节点
 
