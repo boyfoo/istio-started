@@ -60,11 +60,23 @@
 
 另外 `http://prod.jtthink.com:32515/p/12` 也会变成随机，原因文件内有备注解释
 
+### 清理资源
+
+为了防止后续有冲突，清理下暂时不在当实例的资源
+
+`kubectl delete -f prodv2-rule.yaml`
+
+`kubectl delete -f prod-rule-round.yaml`
+
 ### 一致性 hash
 
 用于一个用户请求只到一个固定的节点
 
+`kubectl apply -f prod-rule-hash.yaml`
+
 请求 `http://prod.jtthink.com:32515/hash/12` `header` 加入 `myname` 相同的值的请求会访问同一个节点
+
+实例体验后删除 `kubectl delete -f prod-rule-hash.yaml`
 
 ### JWT
 
