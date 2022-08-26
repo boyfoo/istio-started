@@ -34,4 +34,4 @@ spec:
   rules:
     - from:
         - source:
-            requestPrincipals: [ "*" ]
+            requestPrincipals: [ "*" ]  # Istio 的 JWT 验证规则，默认情况下会直接忽略不带 Authorization 请求头的流量，因此这类流量能直接进入网格内部 所以要新增这个规则 设置全部请求都要验证token

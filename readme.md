@@ -120,9 +120,11 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 此时访问`http://prod.jtthink.com:32515/p/12` 会没有权限
 
-加入请求`token`，访问 `jtw.io`，选择`RS256`加密方式,`VERIFY SIGNATURE`粘贴`cert/mypub.pem`和`cert/myrsa.pem`，`payload`
+加入请求`token`，访问 `jwt.io`，选择`RS256`加密方式,`VERIFY SIGNATURE`粘贴`cert/mypub.pem`和`cert/myrsa.pem`，`payload`
 内新增`"iss":"user@jtthink.com"`
 ，获取生成`token`用于请求
+
+在 `payload` 内加入`exp: 123123123`, 时间戳会自动判断是否过期，目前演示都没加
 
 `curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InpoYW5nc2FuIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoidXNlckBqdHRoaW5rLmNvbSJ9.T1CLmZQMm1c9LIvLxxVODdGR6rKthVFB67wlArc667O91w-cKRXNGQTSmFrLkhnkF5CDMIj3cNwX4OeVAaIIMEiLF2VNYx-YTfwdg3mPrsBI9JlVIjmCTd6TkqNK_6yDtg2HNp_hQKazFn_2wVzmfPJnsMqxTnwFtg_vz7EFwsMKIrjLOPFK6NY7SKCTtVsFOQfZypmsI5hcpVXRmSh7i01DCPAmxfYzOaOdz3qMS63W6UWHuMfDmJxfP-ehqcb2Fkwq76rbSYOVEVq0_U_O7JokGv3DeHDxiM5yMBErgz-5TujBlpovqw_OaIytsWiDwzEErIo0cPnSr9tlZL_VFg" http://prod.jtthink.com:32515/p/12`
 
@@ -137,12 +139,11 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 如果`token`错误则无法返回错误信息，因为在未加入跨域头时，`JWT`就验证报错打回来了，这个时候还没有完成跨域，需要新增一个就算错误也要加入跨域头功能 `kubectl apply -f yamls/jwt-cross.yaml`
 ，原理就是将新增跨域的策略移植到`token`验证策略之前
 
-删除旧路由，避免影响`kubectl delete -f prod-vs.yaml,prod-rule-hash.yaml,prod-rule-round.yaml,prod-cross-vs.yaml`
+删除旧路由，避免后续演示影响`kubectl delete -f prod-vs.yaml,prod-rule-hash.yaml,prod-rule-round.yaml,prod-cross-vs.yaml`
 
+### 动态校验token
 
-### JWT过期时间
-
-在 `payload` 内加入`exp: 123123123`, 时间戳会自动判断是否过期
+部署基础资源 `kb apply -f prod-vs.yaml,jwt-test.yaml,jwt-cross.yaml`
 
 ### Filter
 
