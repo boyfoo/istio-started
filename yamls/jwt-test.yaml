@@ -24,7 +24,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: prod-authpolicy
-  namespace: istio-system
+  namespace: istio-system #因为下面matchLabels针对的是ingressgateway 所以要用在ingressgateway的命名空间内
 spec:
   selector:
     matchLabels:
