@@ -134,7 +134,8 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 打开 `html/index.html` 访问地址 `http://prod.jtthink.com:32515/cross-p/12`
 
-如果`token`错误无法返回错误信息，因为在未加入跨域头时，`JWT`就验证报错打回来了，需要新增一个就算错误也要加入跨域头功能 `kubectl apply -f yamls/jwt-cross.yaml`
+如果`token`错误则无法返回错误信息，因为在未加入跨域头时，`JWT`就验证报错打回来了，这个时候还没有完成跨域，需要新增一个就算错误也要加入跨域头功能 `kubectl apply -f yamls/jwt-cross.yaml`
+，原理就是将新增跨域的策略移植到`token`验证策略之前
 
 ### 访问策略
 

@@ -19,6 +19,8 @@ spec:
               }
             ]
         }
+      forwardOriginalToken: true #token继续传到下游的header请求中
+      outputPayloadToHeader: "Userinfo" #认证解析后的内容base64编码后放入改header字段内
 ---
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
