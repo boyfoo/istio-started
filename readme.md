@@ -141,9 +141,27 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 删除旧路由，避免后续演示影响`kubectl delete -f prod-vs.yaml,prod-rule-hash.yaml,prod-rule-round.yaml,prod-cross-vs.yaml`
 
-### 动态校验token
+### 重新部署
 
-部署基础资源 `kb apply -f prod-vs.yaml,jwt-test.yaml,jwt-cross.yaml`
+部署基础资源 `kb apply -f prod-vs.yaml``
+
+
+### GRPC
+
+安装基础工具
+
+`porotoc`工具下载`https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.3`
+
+```shell
+go install google.golang.org/protobuf/cmd/protoc-gen-go
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+```
+
+上面的如果执行`proto.bat`报错，可能是`protoc-gen-go-grpc`版本问题，可以尝试此链接
+https://github.com/grpc/grpc-go/releases/tag/cmd%2Fprotoc-gen-go-grpc%2Fv1.1.0
+下载旧版本试试
+
+部署：
 
 ### Filter
 

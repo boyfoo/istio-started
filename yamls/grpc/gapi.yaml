@@ -1,37 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reviewapi
+  name: gprodapi
   namespace: myistio
 spec:
   selector:
     matchLabels:
-      app: review
+      app: gprod
   replicas: 1
   template:
     metadata:
       labels:
-        app: review
+        app: gprod
+        version: 1
     spec:
       containers:
-        - name: review
-          image: registry.cn-hangzhou.aliyuncs.com/boyfoo/review:1.0
+        - name: gprodapi
+          image: registry.cn-hangzhou.aliyuncs.com/boyfoo/gprods:1.0
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8081
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: reviewsvc
+  name: gprodsvc
   namespace: myistio
   labels:
-    app: review
+    app: gprod
 spec:
-  type: ClusterIP  # 节点形式
+  type: ClusterIP
   ports:
     - port: 80
-      targetPort: 8081
-  #      nodePort: 30033
+      targetPort: 8080
+      protocol: TCP
+      name: grpc
   selector:
-    app: review
+    app: gprod
