@@ -178,6 +178,17 @@ https://github.com/grpc/grpc-go/releases/tag/cmd%2Fprotoc-gen-go-grpc%2Fv1.1.0
 
 本地运行 `go run test.go`
 
+### http证书
+
+将`aliyun`下载好的证书绑定入：
+
+`kb create -n istio-system secret tls istio-ingressgateway-certs --key 8384742_istio.k3s.wiki.key --cert 8384742_istio.k3s.wiki.pem`
+
+执行`kb apply -f yamls/prod-vs-https.yaml`
+
+访问`https://istio.k3s.wiki/p/123`
+
+
 ### Filter
 
 删除其他网关配置
