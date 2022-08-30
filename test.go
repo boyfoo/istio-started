@@ -9,19 +9,17 @@ import (
 )
 
 func main() {
-	client, err := grpc.DialContext(context.Background(), ":8080", grpc.WithInsecure())
+	client, err := grpc.DialContext(context.Background(), "grpc.jtthink.com:31259", grpc.WithInsecure())
+
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
-	rep := &pbfiles.ProdResponse{}
-	err = client.Invoke(context.Background(), "ProdService/GetPord",
-		&pbfiles.ProdRequest{
-			ProdId: 11123,
-		},
-		rep,
-	)
+	rsp := &pbfiles.ProdResponse{}
+	err = client.Invoke(context.Background(),
+		"/ProdService/GetProd",
+		&pbfiles.ProdRequest{ProdId: 123}, rsp)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
-	fmt.Println(rep.Result)
+	fmt.Println(rsp.Result)
 }

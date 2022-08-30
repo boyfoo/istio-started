@@ -143,12 +143,11 @@ $ openssl rsa -in myrsa.pem -pubout -out mypub.pem
 
 ### 重新部署
 
-部署基础资源 `kb apply -f prod-vs.yaml``
-
+部署基础资源 `kb apply -f prod-vs.yaml,jwt-test.yaml,jwt-cross.yaml`
 
 ### GRPC
 
-安装基础工具
+**开发阶段**安装基础工具
 
 `porotoc`工具下载`https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.3`
 
@@ -161,7 +160,23 @@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 https://github.com/grpc/grpc-go/releases/tag/cmd%2Fprotoc-gen-go-grpc%2Fv1.1.0
 下载旧版本试试
 
-部署：
+体验的直接部署： `cd yamls/grpc && kb apply -f .`
+
+设置一个`host`域名代理到服务器`grpc.jtthink.com`
+
+运行`go run test.go`，会提示权限不足（因为后续新建了新的网关，文件内容都变成了选择了新网关的名称，所以这部分应该不会生效），因为之前设置的`jwt`把所有请求都拦截了，需要新增一个新的`istio-ingressgateway`专门来处理`grpc`请求
+
+使用工具打印出自带网关的组件部分的`yaml`: `./istioctl profile dump --config-path components demo`
+
+将内容保存至`sys/demo.yaml`
+
+为防止有全局影响先删除验证`kb delete -f jwt-test.yaml,jwt-cross.yaml`等都部署完在新增
+
+使用工具按照这个文件`./istioctl install -f sys/demo.yaml`
+
+按照之前安装的情况修改为`nodeport`和端口 (k3s可以不改，因为会自动代理)
+
+本地运行 `go run test.go`
 
 ### Filter
 

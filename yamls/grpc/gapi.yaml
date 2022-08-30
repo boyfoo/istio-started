@@ -7,12 +7,13 @@ spec:
   selector:
     matchLabels:
       app: gprod
+      version: v1
   replicas: 1
   template:
     metadata:
       labels:
         app: gprod
-        version: 1
+        version: v1
     spec:
       containers:
         - name: gprodapi

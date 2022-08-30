@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: grpcvs
+  namespace: myistio
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - grpc-gateway #与gprodgateway.yaml名称相同
+  http:
+    - route:
+        - destination:
+            host: gprodsvc  # gapi.yaml内的服务名
+            port:
+              number: 80 #gapi.yaml内的spec.ports[0].port
