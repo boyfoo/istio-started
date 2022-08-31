@@ -164,7 +164,8 @@ https://github.com/grpc/grpc-go/releases/tag/cmd%2Fprotoc-gen-go-grpc%2Fv1.1.0
 
 设置一个`host`域名代理到服务器`grpc.jtthink.com`
 
-运行`go run test.go`，会提示权限不足（因为后续新建了新的网关，文件内容都变成了选择了新网关的名称，所以这部分应该不会生效），因为之前设置的`jwt`把所有请求都拦截了，需要新增一个新的`istio-ingressgateway`专门来处理`grpc`请求
+运行`go run test.go`，会提示权限不足（因为后续新建了新的网关，文件内容都变成了选择了新网关的名称，所以这部分应该不会生效），因为之前设置的`jwt`
+把所有请求都拦截了，需要新增一个新的`istio-ingressgateway`专门来处理`grpc`请求
 
 使用工具打印出自带网关的组件部分的`yaml`: `./istioctl profile dump --config-path components demo`
 
@@ -187,7 +188,6 @@ https://github.com/grpc/grpc-go/releases/tag/cmd%2Fprotoc-gen-go-grpc%2Fv1.1.0
 执行`kb apply -f yamls/prod-vs-https.yaml`
 
 访问`https://istio.k3s.wiki/p/123`
-
 
 ### Filter
 
@@ -222,3 +222,14 @@ https://github.com/grpc/grpc-go/releases/tag/cmd%2Fprotoc-gen-go-grpc%2Fv1.1.0
 部署：`kb apply -f testfilter-checkappid.yaml`
 
 此时请求会报错`400`，需要在header头里加`appid`值
+
+### 安装 jaeger
+
+`kb apply -f samples/addons/jaeger.yaml`
+
+部署网关 `kb apply -f istio-started/yamls/jaeger/gateway.yaml`
+
+循环请求100次`for i in $(seq 1 100);do curl -s -o /dev/null http://localhost:32515/p/123 -H "host:prod.jtthink.com"; done`
+，因为在虚拟机里执行，没有`host`解析所以加上参数
+
+这个时候访问`http://tracing.jtthink.com`就有数据了

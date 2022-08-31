@@ -11,6 +11,8 @@ spec:
     - applyTo: HTTP_FILTER
       match:
         context: GATEWAY
+      proxy:
+        proxyVersion: ^1\.9.* #只有这个版本才生效
       patch:
         operation: INSERT_BEFORE
         value:
