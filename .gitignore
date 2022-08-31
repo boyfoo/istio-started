@@ -15,3 +15,5 @@ src/demo01/myhook
 /istio/*
 /istio
 /build
+/gateway-certs
+/gateway-certs/*
