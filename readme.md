@@ -12,6 +12,8 @@
 
 创建一个学习用的命名空间 `kubectl create ns myistio`
 
+卸载`./istioctl manifest generate --set profile=demo | kubectl delete -f -`，并删除命名空间 ``
+
 ### 字段注入istio
 
 显示命名空间是否开启自动注入 `kubectl get namespace -L istio-injection`
